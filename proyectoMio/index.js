@@ -1,6 +1,6 @@
-const express = require("express")
-server = express()
-PORT=3000
+const express = require("express");
+const server = express()
+PORT = 3000
 
 server.use(express.json())
 
@@ -47,21 +47,116 @@ const users = [
     }
 ];
 
-server.get("/usuarios",(req, res)=>{
-res.json(users)
-})
+server.get("/users", (req, res) => {
+    usuariosActivos = []
 
-server.get("/usuarios/:id",(req, res)=>{
-const id = Number(req.params.id)
-for(let i =0; i<users.length; i++){
-    if(users[i].id===id){
-      res.json(users[i])
-    }
+    for(let i = 0; i<users.length; i++){
+
+if(users[i].isActive === true){
+
+usuariosActivos.push(users[i])
 }
+
+    }
+    res.json(usuariosActivos)
 })
 
-server.post("/usuarios")
+server.get("/users/:id", (req, res) => {
+    const id = parseInt(req.params.id)
+    const user = users.find(usuario => usuario.id == id)
+    res.json(user)
+})
 
-server.listen(PORT,()=>{
-console.log("El servidor corre en el puerto " + PORT)
+server.post("/users", (req, res) => {
+    const { firstname, lastname, isActive, age, hobbis } = req.body
+    newId = users[0].id
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id > newId) {
+            newId = users[i].id
+        }
+    }
+    const nuevoUsuario = {
+        id: newId + 1,
+        firstname,
+        lastname,
+        isActive,
+        age,
+        hobbis
+    }
+    users.push(nuevoUsuario)
+    res.json({ mensaje: "Usuario creado, el id es " + nuevoUsuario.id })
+})
+
+server.put("/users/:id", (req, res) => {
+    id = parseInt(req.params.id)
+    const { firstname, lastname, isActive, age, hobbis } = req.body
+    let user = {}
+    let idex = 0
+    for (let i = 0; i < users.length; i++) {
+
+        if (users[i].id === id) {
+            user = users[i]
+            index = i
+
+        }
+
+    }
+    user.firstname = firstname
+    user.lastname = lastname
+    user.isActive = isActive
+    user.age = age
+    user.hobbis = hobbis
+    users[index] = user
+    res.json({mensaje: "usuario modificado en su totalidad", usuario: users[index]})
+})
+
+server.patch("/users/:id", (req, res) => {
+
+    const id = Number(req.params.id)
+    const { firstname, lastname, isActive, age, hobbis } = req.body
+    var user = {}
+    var index = 0
+    for (var i = 0; i < users.length; i++) {
+
+        if (users[i].id === id) {
+            user = users[i]
+            index = i
+        }
+    }
+
+    user.firstname = firstname ? firstname : user.firstname
+    user.lastname = lastname ? lastname : user.lastname
+    user.isActive = isActive ? isActive : user.isActive
+    user.age = age ? age : user.age
+    user.hobbis = hobbis ? hobbis : user.hobbis
+
+    users[index] = user
+    res.json({ mensaje: "Usuario modificado parcialmente", usuario: users[index] })
+
+})
+
+server.delete("/users/:id", (req, res) => {
+const id = Number(req.params.id)
+for(let i = 0; i<users.length; i++){
+if(users[i].id === id){
+    users[i].isActive = false
+}
+}
+
+let usuariosActivos=[]
+for(let i = 0; i<users.length; i++){
+
+
+if(users[i].isActive === true){
+usuariosActivos.push(users[i])
+}
+
+}
+res.json({mensaje: "Usuario eliminado", usuarios: usuariosActivos})
+})
+
+server.listen(PORT, () => {
+
+    console.log("el server corre en el puerto " + PORT)
+
 })
