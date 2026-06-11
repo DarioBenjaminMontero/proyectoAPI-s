@@ -1,6 +1,6 @@
 const express = require("express");
 const server = express()
-PORT = 3000
+let PORT = 3000
 
 server.use(express.json())
 
@@ -69,7 +69,7 @@ server.get("/users/:id", (req, res) => {
 
 server.post("/users", (req, res) => {
     const { firstname, lastname, isActive, age, hobbis } = req.body
-    newId = users[0].id
+    let newId = users[0].id
     for (let i = 0; i < users.length; i++) {
         if (users[i].id > newId) {
             newId = users[i].id
@@ -88,10 +88,10 @@ server.post("/users", (req, res) => {
 })
 
 server.put("/users/:id", (req, res) => {
-    id = parseInt(req.params.id)
+    let id = parseInt(req.params.id)
     const { firstname, lastname, isActive, age, hobbis } = req.body
     let user = {}
-    let idex = 0
+    let index = 0
     for (let i = 0; i < users.length; i++) {
 
         if (users[i].id === id) {
