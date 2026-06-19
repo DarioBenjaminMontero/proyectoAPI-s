@@ -1,8 +1,13 @@
-const { Hospitales } = require("../modelos/hospitalesModelos.js")
+const { Hospitales, Doctores } = require("../modelos/index.js")
 
 const obtenerHospitales = async(req, res) =>{
     const consulta = await Hospitales.findAll()
 res.status(200).json(consulta);
+}
+
+const hospitalesYDoctores = async (req,res) =>{
+const consulta = await Hospitales.findAll({include: Doctores})
+res.status(200).json(consulta)
 }
 
 
@@ -81,4 +86,4 @@ res.status(404).json({message: "no se encontraron hospitales activos"})
 
 
 
-module.exports = { obtenerHospitales, crearHospital, buscarPorEspecialidad, eliminarHospital, hospitalesActivos}
+module.exports = { obtenerHospitales, crearHospital, buscarPorEspecialidad, eliminarHospital, hospitalesActivos, hospitalesYDoctores}
