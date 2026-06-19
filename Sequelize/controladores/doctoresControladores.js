@@ -1,0 +1,1 @@
+const {Doctores, Hospitales} = require("../modelos/index.js")
