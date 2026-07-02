@@ -1,14 +1,17 @@
 const { sequelize } = require("./BD/baseDeDatos.js")
-const express = require("express")
-require("./modelos/hospitalesModelos.js")
-const rutasHospitales = require("./routes/hospitalesRutas.js")
-PUERTO = 3300
+const express = require("express");
+const router = require("./routes/hospitalesRutas.js")
+const router2 = require("./routes/doctoresRutas.js")
+PORT = 3300
+require("./modelos/relacionDoctoresHospitales.js")
 const servidor = express()
 servidor.use(express.json())
-servidor.get("/", (req, res)=>{
-    res.status(200).json({message: "todo joya pa"})
-})
-servidor.use("/hospitales", rutasHospitales)
-servidor.listen(PUERTO, async() =>{
-    await sequelize.sync({alter: true})
+
+servidor.use("/hospitales", router)
+servidor.use("/doctores",  router2)
+
+
+servidor.listen(PORT, async ()=>{
+await sequelize.sync({ alter: true });
+console.log("el servidor corre xd")
 })

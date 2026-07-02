@@ -21,6 +21,12 @@ const createHobby = async (req, res) => {
     }
 };
 
+//{id: 1
+//nombreHobbie: futbol
+//usuariosincluidos : [benja, santi, emiliano]},
+//id: 2,
+//nombrehobbie
+//usuariosincluidos: [agustin, thiago]
 module.exports = {
     getHobbies,
     createHobby

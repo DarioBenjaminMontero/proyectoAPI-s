@@ -1,34 +1,49 @@
-const { sequelize } = require('../BD/baseDeDatos.js');
-const { DataTypes } = require('sequelize');
+const { sequelize } = require("../BD/baseDeDatos.js")
+const { DataTypes } = require("sequelize"); 
+
 const Hospitales = sequelize.define("Hospitales", {
+
 id: {
+
 type: DataTypes.INTEGER,
-autoIncrement: true,
-primaryKey: true,
+primaryKey : true,
+autoIncrement: true
+
 },
 nombre: {
-type : DataTypes.STRING,
-allowNull: false,
-},  
-descripcion: {
+
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull : false
+},
+descripcion: {
+type: DataTypes.STRING,
+allowNull : false
+
 },
 direccion: {
 type: DataTypes.STRING,
-allowNull: false,
+allowNull : false
+
 },
-isActive: {
-type : DataTypes.BOOLEAN,
-defaultValue: true,
-allowNull: false,
+isActive : {
+
+type: DataTypes.BOOLEAN,
+allowNull : false,
+defaultValue : true
+
 },
 especialidad: {
+
 type: DataTypes.STRING,
-allowNull: false,
+allowNull : false
+
 }
-}, {
-tableName: "hospitales",
-timestamps: true,
+
+
+},{
+tableName : "hospitales",
+timestamps : true
+
 })
-module.exports = { Hospitales };
+
+module.exports = { Hospitales }
