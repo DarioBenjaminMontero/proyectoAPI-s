@@ -106,6 +106,33 @@ const consulta = await usuario.addHobby(hobbie, {through : { dia : dia}})
 res.status(201).json({message: "creado"})
 }
 
+const buscarPorDias = async(req, res) => {
+
+const dia = req.body.dia
+
+const consulta = await Usuarios.findAll({include : [{
+
+model: Hobbies,
+through : {
+
+    attributes : ["dia"], 
+    where : {
+
+        dia: dia
+
+    }
+},
+required : false
+}]})
+
+res.status(200).json({
+      message: `Lista de todos los usuarios y sus actividades para el día: ${dia}`,
+      data: consulta
+    
+    })
+
+}
+
 
 const buscarElMasViejo = async(req, res) =>{
 let arrayObjetos = []
